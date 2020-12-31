@@ -1,0 +1,29 @@
+﻿@inject HttpClient HttpClient 
+@using System.Text.Json 
+
+<div class="row justify-content-center">
+    <div class="col-auto text-center border rounded bg-facts m-2">
+        <h3>Feline Facts 🐱‍</h3>
+        <p class="mb-0">@fact</p>
+    </div>
+</div>
+
+
+@code {
+
+    private string fact = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await OtroFact();
+    }
+
+    private async Task OtroFact()
+    {
+        var ale = await HttpClient.GetFromJsonAsync<JsonElement>("https://cat-fact.herokuapp.com/facts/random");
+        //fact = ale.ToString();
+        fact = ale.GetProperty("text").GetString();
+    }
+
+
+}

@@ -1,0 +1,41 @@
+﻿@inject HttpClient HttpClient
+@using System.Text.Json
+
+<div class="row justify-content-center foto-gato">
+    <div class="col-4 mb-1">
+        <button class="btn btn-outline-dark btn-block" @onclick="OtroGato">
+            <h3>Summon random kitten!</h3>
+        </button>
+    </div>
+    <div class="col-12 text-center" style="height: 60vh;">
+
+        <img class="foto-gato" src="@rutafoto" alt="imagen de gatito">
+        <p>
+            <small>Created by Alejandro Martin using "cat-facts" API by alexwohlbruck and random.cat API</small>
+        </p>
+    </div>
+</div>
+
+
+
+@code {
+    private string rutafoto = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        /*
+        var ale = await HttpClient.GetFromJsonAsync<JsonElement>("https://aws.random.cat/meow");
+        //fact = ale.ToString();
+        rutafoto = ale.GetProperty("file").GetString();
+        */
+        await OtroGato();
+    }
+
+    private async Task OtroGato()
+    {
+        var ale = await HttpClient.GetFromJsonAsync<JsonElement>("https://aws.random.cat/meow");
+        //fact = ale.ToString();
+        rutafoto = ale.GetProperty("file").GetString();
+    }
+
+}
